@@ -19,7 +19,7 @@ var Handler = {
 		var company = this.event.request.intent.slots.Company.value;
 		var scores = [];
 		var alexa = this;
-		T.get('search/tweets', { q: company, count: 100}, function(err, data) {
+		T.get('search/tweets', { q: "@" + company, count: 100}, function(err, data) {
 			var tweets = data.statuses;
 			var positiveTweet = null;
 			var posScore = 0;
@@ -58,15 +58,15 @@ var Handler = {
 				if (negativeTweet !== null)
 					response += "Listen to this bad tweet, " + negativeTweet;
 				if (positiveTweet !== null)
-					response += "On a lighter note, someone said, " + negativeTweet;
+					response += "On a lighter note, someone said, " + positiveTweet;
 			}
 			else
 			{
 				response = company + " has a positive reception recently on Twitter.";
 				if (negativeTweet !== null)
-					response += "Listen to this bad tweet, " + negativeTweet;
+					response += "Listen to this negative tweet, " + negativeTweet;
 				if (positiveTweet !== null)
-					response += "On a lighter note, someone said, " + negativeTweet;
+					response += "Someone positively tweeted, " + positiveTweet;
 			}
 			alexa.emit(':tell', response);
 		});
